@@ -1,0 +1,211 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+Progress Tracker
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='board.css')}}">
+{% endblock %}
+
+{% block content %}
+
+    <!--NAVBAR-->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url_for('index') }}">Progress Tracker</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{url_for('create_board') }}">Create Board</a></li>
+            <li><a href="{{ url_for('view_profile', username=name) }}">{{ name }}'s Profile</a></li>
+            <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-1 main">
+
+          <!--Title-->
+          <h1 class="page-header">{{ board.title }}</h1>
+     
+          <!--Description-->
+          {% if board.description == None %}
+          <p></p>
+          {% else %}
+          <p>{{ board.description }}</p>
+          {% endif %}
+          
+          <br>
+
+          <!--Owner-->
+          <h5><b>Creator:</b>  <a href="{{url_for('view_user_profile', username=board.owner)}}">{{ board.owner}} </a></h5>  
+
+          <!--Privacy-->     
+          {% if board.private == 'Private' %}
+          <h5><b>Private Board</b> </h5>
+          {% endif %}</b>
+
+          {% if board.private == 'Public' %}
+         <h5> <b>Public Board</b></h5>
+          {% endif %}
+
+
+          {% if board.owner == name %}
+          <!--Update details_-->
+          <small><a href="{{ url_for('update_board', board_id=board.public_id) }}" style="font-size: 10px; padding-right: 5px;">Board Details</a></small>
+
+          <!--Delete board-->
+          <small><a href="{{ url_for('delete_board', board_id=board.public_id) }}" style="font-size: 10px;">Delete Board</a></small>
+          {% endif %}
+          
+          <br><br>
+
+          <!--COLLABORATORS-->
+         
+          <h4 class="">
+            <b>Collaborators</b> 
+
+                <!--Add Collaborator-->
+                <a href="{{ url_for('add_collab', board_id=board.public_id) }}"> 
+                  <img src="{{ url_for('static', filename='images/add.png') }}" width="20">
+                </a>
+          
+          </h4>
+
+          {% for collab in collabs %}           
+
+          <!--List collaborators-->        
+          <a href="{{ url_for('view_user_profile', username=collab.user_id) }}">{{ collab.user_id }}</a><!--Link to profile--> 
+
+
+              {% if board.owner == name %}
+              <!--Remove a collaborator-->
+              <a href="{{ url_for('remove_collab', board_id=board.public_id, username=collab.user_id) }}"> 
+                <img width="15" src="{{ url_for('static', filename='images/remove.png') }}">
+              </a>
+              {% endif %}
+
+          {% endfor %}
+
+          <br><br>
+
+          <!--GROUP-->
+
+          <!--Show all groups-->
+          {% for group in groups %}
+          <h4>
+            <b>{{ group.title }}</b> 
+
+            <br>
+
+            <small>
+              <a href="{{ url_for('update_group', board_id=board.public_id, group_id=group.public_id) }}" style="font-size: 10px">Edit Title </a>
+            </small> 
+            <small>
+              <a href="{{ url_for('delete_group', board_id=board.public_id, group_id=group.public_id) }}" style="font-size: 10px; margin-left: 5px;"> Delete</a>
+            </small> 
+
+          </h4>
+
+          <br>
+
+          <!--TICKET-->
+             
+              {% for ticket in tickets %} 
+             <div class="table-responsive">                       
+
+                {% if ticket.group_id == group.public_id %}
+
+                <table style="table-layout: fixed; width: 100%;" class="table">
+
+                              <tbody>
+                                <tr >
+
+                                  <!--Ticket-->
+                                  <td class="table-success">{{ ticket.text }}</td>
+
+                                  <!--People/Assignees-->
+                                  <td>
+                                    
+                                    {% for assignee in assignees %}
+
+                                      {% if assignee.ticket_id == ticket.public_id %}
+
+                                      <!--Assignee name-->
+                                      <a href="{{url_for('view_user_profile', username=assignee.user_id)}}">{{ assignee.user_id }}</a>
+
+                                      {% if assignees != None %}
+                                      <!--Remove icon-->
+                                      <a href="{{ url_for('remove_assignee', board_id=board.public_id, ticket_id=ticket.public_id, user_id=assignee.user_id)}}"> 
+                                        <img width="15" src="{{ url_for('static', filename='images/remove.png') }}">
+                                      </a>
+                                      {% endif %}
+                                                                              
+                                      {% endif %}
+
+                                    {% endfor %}  
+
+                                  </td> 
+
+                                  <!--Status-->
+                                  <td>{{ ticket.status }}</td>
+                                 
+                                  <!--Comments, Update, Delete-->
+                                  <td>
+
+                                    <!--Comments-->
+                                     <a href="{{ url_for('view_comments', board_id=board.public_id, ticket_id=ticket.public_id) }}">
+                                      <img src="{{ url_for('static', filename='images/comment.png') }}" width=20>
+                                    </a> 
+
+                                    <!--Update-->
+                                      <a href="{{ url_for('update_ticket', board_id=board.public_id, group_id=group.public_id, ticket_id=ticket.public_id) }}">
+                                        <img  src="{{ url_for('static', filename='images/update.png') }}" width="100">
+                                      </a>
+
+                                    <!--Delete-->
+                                      <a href="{{ url_for('delete_ticket', board_id=board.public_id, group_id=group.public_id, ticket_id=ticket.public_id) }}">
+                                        <img  src="{{ url_for('static', filename='images/delete.png') }}" width="15">
+                                      </a>
+
+                                  </td>
+   
+                                </tr>
+
+                              </tbody>
+                            </table>
+                     </div> 
+
+              {% endif %}
+
+            {% endfor %}
+
+          <!--Add ticket-->
+          <a href="{{ url_for('create_ticket', board_id=board.public_id, group_id=group.public_id) }}"><small style="font-size: 10px">Add Ticket</small></a>
+
+           <br><br>
+          {% endfor %}    
+
+        <!--Add group-->
+
+        <h4 class=""><b>Add Group</b> <a href="{{ url_for('add_group', board_id=board.public_id) }}"> <img  src="{{ url_for('static', filename='images/add.png') }}" width="20"></a></h4>
+
+          <br><br>
+     
+        </div>
+      </div>
+    </div>
+{% endblock %}

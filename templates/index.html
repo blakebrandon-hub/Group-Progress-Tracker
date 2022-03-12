@@ -1,0 +1,84 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+Progress Tracker
+{% endblock %}
+
+
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='board.css')}}">
+{% endblock %}
+
+{% block content %}
+
+  <!--Navbar-->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Progress Tracker</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+
+            <li><a href="{{ url_for('create_board') }}">Create Board</a></li>
+
+            <li><a href="{{ url_for('view_profile', username=name) }}">{{ name }}'s Profile</a></li>
+            <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+
+        <br>
+
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-1 main">
+          
+          <h1>Your Projects</h1>
+
+          <ul>
+
+            {% for board in boards %}
+            <li>
+              <a style="font-size: 125%; padding-right: 5px;" href="{{ url_for('view_board', board_id=board.public_id) }}">{{ board.title }}</a> 
+              </li>
+            {% endfor %}
+
+          </ul>
+
+          <br><hr>
+       
+       <h1>Your Collaborations</h1>
+
+       <ul>
+         {% for collab in collabs %}
+         <li>
+          <a style="font-size: 125%; padding-right: 5px;" href="{{ url_for('view_board', board_id=collab.board_id) }}">{{ collab.board_title }}</a> 
+         </li>
+
+         {% endfor %}
+       </ul>
+
+</div>
+
+
+
+
+
+          
+        </div>
+      </div>
+    </div>
+{% endblock %}
