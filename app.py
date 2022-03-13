@@ -176,9 +176,9 @@ def create_board():
             description=form.description.data)
 
         db.session.add(new_board)
-        db.session.commit()"""
+        db.session.commit()
 
-        return redirect(url_for('view_board', board_id=public_id))
+        return redirect(url_for('view_board', board_id=public_id))"""
 
     return render_template('board/create_board.html', form=form, name=current_user.username)
 
