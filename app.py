@@ -32,7 +32,7 @@ class Board(db.Model):
     title = db.Column(db.String(100))
     public_id = db.Column(db.String)
     owner = db.Column(db.String(15))
-    private = db.Column(db.String)
+    privacy = db.Column(db.String)
     description = db.Column(db.String(500))
 
 
