@@ -6,7 +6,7 @@ Progress Tracker is a tool for tracking the progress of group projects.
 
 **<u>How I do I start using this application?</u>**
 
-* Go to the signup page and create an account.
+* Go to the signup page and create an account
 
    [Progress Tracker (group-task.herokuapp.com)](http://group-task.herokuapp.com/signup)
 
