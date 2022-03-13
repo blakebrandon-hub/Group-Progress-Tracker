@@ -91,6 +91,10 @@ def index():
     return render_template('index.html', name=current_user.username, 
         boards=my_boards, collabs=my_collabs)
 
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
