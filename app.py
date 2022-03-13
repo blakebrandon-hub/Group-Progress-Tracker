@@ -166,9 +166,10 @@ def edit_profile():
 @app.route('/create', methods=['GET', 'POST'])
 @login_required
 def create_board():
-    form = BoardForm()
+    return "Hello World"
+    """form = BoardForm()
 
-    """if form.validate_on_submit():
+    if form.validate_on_submit():
         public_id = str(uuid.uuid4())[:7]
 
         new_board = Board(public_id=public_id, title=form.title.data, 
@@ -178,9 +179,9 @@ def create_board():
         db.session.add(new_board)
         db.session.commit()
 
-        return redirect(url_for('view_board', board_id=public_id))"""
+        return redirect(url_for('view_board', board_id=public_id))
 
-    return render_template('board/create_board.html', form=form, name=current_user.username)
+    return render_template('board/create_board.html', form=form, name=current_user.username)"""
 
 @app.route('/<board_id>')
 @login_required
