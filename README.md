@@ -12,7 +12,7 @@ Progress Tracker is a tool for tracking the progress of group projects.
 
 * You will be redirected to the login page and can then sign in with those credentials.
 
-* Once logged in, click "Create Board" on the navbar. You will be prompted to enter the board title, description and choose privacy.
+* Once logged in, click "Create Board" on the navbar. You will be prompted to enter a board title, description and choose the privacy.
 
 * You will be redirected to your first board. From here you can edit board details, delete the board, add collaborators, create groups, create tickets and comment on those tickets.
 
