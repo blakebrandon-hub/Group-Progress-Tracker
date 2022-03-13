@@ -534,11 +534,10 @@ def update_ticket(board_id, group_id, ticket_id):
 
                 return "<h1>Error: Must be creator or collaborator to be assigned to ticket" 
 
-        new_assignee = Assignee(user_id=form.assign.data, 
-                ticket_id=ticket_id, board_id=board_id)
+            new_assignee = Assignee(user_id=form.assign.data, ticket_id=ticket_id, board_id=board_id)
 
-        db.session.add(new_assignee)              
-        db.session.commit()
+            db.session.add(new_assignee)              
+            db.session.commit()
 
         return redirect(url_for('view_board', board_id=board_id))
 
