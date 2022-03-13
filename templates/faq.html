@@ -1,0 +1,93 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+Progress Tracker
+{% endblock %}
+
+
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='board.css')}}">
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="container-fluid">
+      <div class="row">
+
+
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-1 main">
+
+          <h1>Progress Tracker</h1>
+          
+          <h3><u>What is Progress Tracker?</u></h3>
+
+<h4>Progress Tracker is a tool for tracking the progress of group projects.</h4>
+
+<h3><u>How I do I start using this application?</u></h3>
+
+
+
+<br>
+
+<ul>
+
+<h4>
+
+<li>Go to the signup page and <a href="http://group-task.herokuapp.com/signup">create an account</a>.</li><br>
+
+<li>Progress Tracker (group-task.herokuapp.com)</li><br>
+
+<li>You will be redirected to the login page and can then sign in with those credentials.</li><br>
+
+<li>Once logged in, click "Create Board" on the navbar. You will be prompted to enter a board title, description and choose the privacy.</li><br>
+
+<li>You will be redirected to your first board. From here you can edit board details, delete the board, add collaborators, create groups, create tickets and comment on those tickets.</li><br>
+
+</h4>
+
+</ul>
+
+<h3><u>Board Creator Privileges</u></h3>
+
+<ul>
+<h4>
+<li>Edit board privacy</li> 
+<li>Edit board title and description</li>
+<li>Delete board</li>
+<li>Delete collaborator</li>
+<li>Add collaborators</li>
+<li>Create, update and delete groups</li>
+<li>Create, update and delete tickets</li>
+<li>Comment on tickets</li>
+</h4>
+</ul>
+
+
+<h3><u>Collaborator Privileges</u></h3>
+
+<ul>
+  <h4>
+<li>Add collaborators</li>
+<li>Create, update and delete groups</li>
+<li>Create, update and delete tickets</li>
+<li>Comment on tickets</li>
+</h4>
+</ul>
+
+
+</div>
+
+
+
+
+
+          
+        </div>
+      </div>
+    </div>
+{% endblock %}
