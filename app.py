@@ -168,7 +168,7 @@ def edit_profile():
 def create_board():
     form = BoardForm()
 
-    if form.validate_on_submit():
+    """if form.validate_on_submit():
         public_id = str(uuid.uuid4())[:7]
 
         new_board = Board(public_id=public_id, title=form.title.data, 
@@ -176,7 +176,7 @@ def create_board():
             description=form.description.data)
 
         db.session.add(new_board)
-        db.session.commit()
+        db.session.commit()"""
 
         return redirect(url_for('view_board', board_id=public_id))
 
