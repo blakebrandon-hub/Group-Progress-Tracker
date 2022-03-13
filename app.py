@@ -187,16 +187,14 @@ def create_board():
 def view_board(board_id): 
     board = Board.query.filter_by(public_id=board_id).first()
     collab = Collaborator.query.filter_by(board_id=board_id, user_id=current_user.username).first()
+    
+    if board.private != "Public":
 
-    if board.owner != current_user.username:
-        
-        if collab == None:
-            
-            return "<h1>Error: Board is private. Must be creator or collaborator to view this board</h1>"
+        if board.owner != current_user.username:
 
-        if collab.user_id != current_user.username:
+            if collab == None or collab.user_id != current_user.username:
 
-            return "<h1>Error: Board is private. Must be creator or collaborator to view this board</h1>"
+                return "<h1>Error: Board is private. Must be creator or collaborator to view this board</h1>"
 
     collabs = Collaborator.query.filter_by(board_id=board_id).all()
 
