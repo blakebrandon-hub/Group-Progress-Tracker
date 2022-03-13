@@ -32,7 +32,7 @@ class Board(db.Model):
     title = db.Column(db.String(100))
     public_id = db.Column(db.String)
     owner = db.Column(db.String(15))
-    private = db.Column(db.String, default='Public')
+    private = db.Column(db.String)
     description = db.Column(db.String(500))
 
 
@@ -172,7 +172,7 @@ def create_board():
         public_id = str(uuid.uuid4())[:7]
 
         new_board = Board(public_id=public_id, title=form.title.data, 
-            private=form.private.data, owner=current_user.username, 
+            private="Public", owner=current_user.username, 
             description=form.description.data)
 
         db.session.add(new_board)
