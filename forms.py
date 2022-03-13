@@ -17,7 +17,6 @@ class RegisterForm(FlaskForm):
 
 class BoardForm(FlaskForm):
     title = StringField('Title')
-    private = BooleanField('Private')
     description = StringField('Description')
 
 
