@@ -504,6 +504,7 @@ def update_ticket(board_id, group_id, ticket_id):
 
     if form.validate_on_submit():
 
+
         if form.text.data != "":
             ticket.text = form.text.data
 
@@ -512,32 +513,28 @@ def update_ticket(board_id, group_id, ticket_id):
 
         if form.assign.data != "":
 
-            collabs = Collaborator.query.filter_by(board_id=board_id).all()
-            assignees = Assignee.query.filter_by(ticket_id=ticket_id).all()
+            collab = Collaborator.query.filter_by(board_id=board_id, user_id=form.assign.data).first()
+            assignee = Assignee.query.filter_by(user_id=form.assign.data, ticket_id=ticket_id).first()
 
             check = False
 
             if board.owner == form.assign.data:
                 check = True
 
-            for c in collabs:
+            if collab != None:
+                check = True
 
-                if c.user_id == form.assign.data:
-                    check = True
-
-            for a in assignees:
-
-                if a.user_id == form.assign.data:
-                    return "<h1>Error: User is already assigned to ticket</h1>"
+            if assignee != None:
+                return "<h1>Error: User is already assigned to ticket</h1>"
 
             if check == False:
+                return "<h1>Error: Must be creator or collaborator to be assigned to ticket"
 
-                return "<h1>Error: Must be creator or collaborator to be assigned to ticket" 
-
-            new_assignee = Assignee(user_id=form.assign.data, ticket_id=ticket_id, board_id=board_id)
+            new_assignee = Assignee(user_id=form.assign.data, 
+                    ticket_id=ticket_id, board_id=board_id)
 
             db.session.add(new_assignee)              
-            db.session.commit()
+        db.session.commit()
 
         return redirect(url_for('view_board', board_id=board_id))
 
