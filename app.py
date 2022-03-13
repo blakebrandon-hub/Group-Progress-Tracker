@@ -168,7 +168,7 @@ def edit_profile():
 def create_board():
     form = BoardForm()
 
-    """if form.validate_on_submit():
+    if form.validate_on_submit():
         public_id = str(uuid.uuid4())[:7]
 
         new_board = Board(public_id=public_id, title=form.title.data, 
@@ -178,7 +178,7 @@ def create_board():
         db.session.add(new_board)
         db.session.commit()
 
-        return redirect(url_for('view_board', board_id=public_id))"""
+        return redirect(url_for('view_board', board_id=public_id))
 
     return render_template('board/create_board.html', form=form, name=current_user.username)
 
@@ -188,30 +188,26 @@ def view_board(board_id):
     board = Board.query.filter_by(public_id=board_id).first()
     collab = Collaborator.query.filter_by(board_id=board_id, user_id=current_user.username).first()
 
-    if board.private != None:
+    if board.owner != current_user.username:
         
-        if board.private != "Public":
+        if collab == None:
+            
+            return "<h1>Error: Board is private. Must be creator or collaborator to view this board</h1>"
 
-            if board.owner != current_user.username:
+        if collab.user_id != current_user.username:
 
-                if collab == None:
-                    return "<h1>Error: Board is private. Must be creator or collaborator to view this board</h1>"
+            return "<h1>Error: Board is private. Must be creator or collaborator to view this board</h1>"
 
-                if collab.user_id != current_user.username:
+    collabs = Collaborator.query.filter_by(board_id=board_id).all()
 
-                    return "<h1>Error: Board is private. Must be creator or collaborator to view this board</h1>"
+    groups = Group.query.filter_by(board_id=board_id).all()
 
-        collabs = Collaborator.query.filter_by(board_id=board_id).all()
+    tickets = Ticket.query.filter_by(board_id=board_id).all()
 
-        groups = Group.query.filter_by(board_id=board_id).all()
-
-        tickets = Ticket.query.filter_by(board_id=board_id).all()
-
-        assignees = Assignee.query.filter_by(board_id=board_id).all()
-
-        return render_template('board/board.html', name=current_user.username, 
-            board=board, groups=groups, collabs=collabs, tickets=tickets, 
-            assignees=assignees)
+    assignees = Assignee.query.filter_by(board_id=board_id).all()
+  
+    return render_template('board/board.html', name=current_user.username, 
+        board=board, groups=groups, collabs=collabs, tickets=tickets, assignees=assignees)
 
 @app.route('/<board_id>/update', methods=['GET', 'POST'])
 @login_required
