@@ -436,6 +436,9 @@ def delete_group(board_id, group_id):
     form = DeleteForm()
 
     if form.validate_on_submit():
+        
+        return "<h1>{{form.confirm.data}}</h1>"
+        
         db.session.delete(group)
 
         if tickets != None:
