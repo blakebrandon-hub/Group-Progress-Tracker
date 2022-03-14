@@ -437,7 +437,7 @@ def delete_group(board_id, group_id):
 
     if form.validate_on_submit():
         
-        return "<h1>{{form.confirm.data}}</h1>"
+        return str(form.confirm.data)
         
         db.session.delete(group)
 
