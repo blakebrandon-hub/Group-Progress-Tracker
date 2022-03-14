@@ -258,29 +258,32 @@ def delete_board(board_id):
     form = DeleteForm()  
 
     if form.validate_on_submit():
-        db.session.delete(board)
 
-        if collabs != None:
-            for c in collabs:
-                db.session.delete(c)
+        if form.confirm.data == True:
 
-        if groups != None:
-            for g in groups:
-                db.session.delete(g)
+            db.session.delete(board)
 
-        if tickets != None:
-            for t in tickets:
-                db.session.delete(t)
+            if collabs != None:
+                for c in collabs:
+                    db.session.delete(c)
 
-        if comments != None:
-            for c in comments:
-                db.session.delete(c)
+            if groups != None:
+                for g in groups:
+                    db.session.delete(g)
 
-        if assignees != None:
-            for a in assignees:
-                db.session.delete(a)
+            if tickets != None:
+                for t in tickets:
+                    db.session.delete(t)
 
-        db.session.commit()
+            if comments != None:
+                for c in comments:
+                    db.session.delete(c)
+
+            if assignees != None:
+                for a in assignees:
+                    db.session.delete(a)
+
+            db.session.commit()
 
         return redirect(url_for('index'))
 
@@ -332,6 +335,7 @@ def add_collab(board_id):
 @app.route('/<board_id>/remove_collab/<username>', methods=['GET', 'POST'])
 @login_required
 def remove_collab(board_id, username):
+
     board = Board.query.filter_by(public_id=board_id).first()
     collab = Collaborator.query.filter_by(board_id=board_id, user_id=current_user.username).first()
 
@@ -347,14 +351,16 @@ def remove_collab(board_id, username):
     form = DeleteForm()
 
     if form.validate_on_submit():
-        db.session.delete(collab)
-        
-        if assignees != None:
-            
-            for a in assignees:
-                db.session.delete(a)
 
-        db.session.commit()
+        if form.confirm.data == True:        
+            db.session.delete(collab)
+            
+            if assignees != None:
+                
+                for a in assignees:
+                    db.session.delete(a)
+
+            db.session.commit()
 
         return redirect(url_for('view_board', board_id=board_id))
 
@@ -567,17 +573,22 @@ def delete_ticket(board_id, group_id, ticket_id):
     form = DeleteForm() 
 
     if form.validate_on_submit():
-        db.session.delete(ticket)
 
-        if assignees != None:
-            for a in assignees:
-                db.session.delete(a)
+        if form.confirm.data == True:
 
-        if comments != None:
-            for c in comments:
-                db.session.delete(c)
+            db.session.delete(ticket)
 
-        db.session.commit()
+            if assignees != None:
+
+                for a in assignees:
+                    db.session.delete(a)
+
+            if comments != None:
+
+                for c in comments:
+                    db.session.delete(c)
+
+            db.session.commit()
 
         return redirect(url_for('view_board', board_id=board_id))
 
@@ -602,10 +613,13 @@ def remove_assignee(board_id, ticket_id, user_id):
     form = DeleteForm()
 
     if form.validate_on_submit():
-        assignee = Assignee.query.filter_by(user_id=user_id, ticket_id=ticket_id).first()
 
-        db.session.delete(assignee)
-        db.session.commit()
+        if form.confirm.data == True:
+
+            assignee = Assignee.query.filter_by(user_id=user_id, ticket_id=ticket_id).first()
+
+            db.session.delete(assignee)
+            db.session.commit()
 
         return redirect(url_for('view_board', board_id=board_id))
 
@@ -708,10 +722,13 @@ def delete_comment(board_id, ticket_id, comment_id):
     form = DeleteForm()
 
     if form.validate_on_submit():
-        comment = Comment.query.filter_by(public_id=comment_id).first()
 
-        db.session.delete(comment)
-        db.session.commit()
+        if form.confirm.data == True:
+        
+            comment = Comment.query.filter_by(public_id=comment_id).first()
+
+            db.session.delete(comment)
+            db.session.commit()
 
         return redirect(url_for('view_comments', board_id=board_id, ticket_id=ticket_id))
 
