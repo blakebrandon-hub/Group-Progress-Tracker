@@ -437,23 +437,23 @@ def delete_group(board_id, group_id):
 
     if form.validate_on_submit():
         
-        return str(form.confirm.data)
+        if form.confirm.data == True:
         
-        db.session.delete(group)
+            db.session.delete(group)
 
-        if tickets != None:
-            for t in tickets:
-                db.session.delete(t)
+            if tickets != None:
+                for t in tickets:
+                    db.session.delete(t)
 
-        if assignees != None:
-            for a in assignees:
-                db.session.delete(a)
+            if assignees != None:
+                for a in assignees:
+                    db.session.delete(a)
 
-        if comments != None:
-            for c in comments:
-                db.session.delete(c)
+            if comments != None:
+                for c in comments:
+                    db.session.delete(c)
 
-        db.session.commit()
+            db.session.commit()
 
         return redirect(url_for('view_board', board_id=board_id))
 
