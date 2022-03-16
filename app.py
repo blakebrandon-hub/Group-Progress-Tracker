@@ -196,8 +196,9 @@ def view_board(board_id):
         if board.owner != current_user.username:
 
             if collab == None or collab.user_id != current_user.username:
-
-                return "<h1>Error: Board is private. Must be creator or collaborator to view this board</h1>"
+                message = "<h1>Error:<br> Board is private. Must be creator or collaborator to view this board</h1>"
+                
+                return render_template('error.html', message=message) 
 
     collabs = Collaborator.query.filter_by(board_id=board_id).all()
 
