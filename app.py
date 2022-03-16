@@ -198,7 +198,7 @@ def view_board(board_id):
             if collab == None or collab.user_id != current_user.username:
                 message = "Board is private. Must be creator or a collaborator to view this board."   
 
-                return render_template('error.html', message=message) 
+                return render_template('error.html', message=message, name=current_user.username) 
 
     collabs = Collaborator.query.filter_by(board_id=board_id).all()
 
@@ -219,7 +219,7 @@ def update_board(board_id):
     if board.owner != current_user.username:
         message = "Only the board creator can modify board details."
 
-        return render_template('error.html', message=message)
+        return render_template('error.html', message=message, name=current_user.username)
 
     form = BoardUpdateForm(
         title=board.title, 
@@ -252,7 +252,7 @@ def delete_board(board_id):
     if board.owner != current_user.username:
         message = "Only the board creator can delete a board."
 
-        return render_template('error.html', message=message)
+        return render_template('error.html', message=message, name=current_user.username)
 
     collabs = Collaborator.query.filter_by(board_id=board_id).all()
     groups = Group.query.filter_by(board_id=board_id).all()
@@ -306,7 +306,7 @@ def add_collab(board_id):
         if collab == None:
             message = "Only the board creator or a collaborator can add collaborators."
 
-            return render_template('error.html', message=message)
+            return render_template('error.html', message=message, name=current_user.username)
 
     form = CollaboratorForm()
 
@@ -320,11 +320,11 @@ def add_collab(board_id):
         
         if board.owner == form.user.data:
             message = "Board creator cannot be added as a collaborator."     
-            return render_template('error.html', message=message)
+            return render_template('error.html', message=message, name=current_user.username)
     
         if check_user_exists == None:
             message = "User not found."
-            return render_template('error.html', message=message)
+            return render_template('error.html', message=message, name=current_user.username)
 
         if check_if_collab != None:
             message = "User is already a collaborator."
@@ -352,7 +352,7 @@ def remove_collab(board_id, username):
         if collab == None:
             message = "Only the board creator or a collaborator can update groups."
 
-            return render_template('error.html', message=message)
+            return render_template('error.html', message=message, name=current_user.username)
 
     collab = Collaborator.query.filter_by(board_id=board_id, user_id=username).first()
     assignees = Assignee.query.filter_by(board_id=board_id).all()
@@ -394,7 +394,7 @@ def add_group(board_id):
     if check == False:
         message = "User must be the board creator or a collaborator to add a group."
 
-        return render_template('error.html', message=message)
+        return render_template('error.html', message=message, name=current_user.username)
 
     form = GroupForm()
 
@@ -421,7 +421,7 @@ def update_group(board_id, group_id):
         if collab == None:
             message = "User must be the board creator or a collaborator to update groups."
 
-            return render_template('error.html', message=message)
+            return render_template('error.html', message=message, name=current_user.username)
 
     group = Group.query.filter_by(public_id=group_id).first()
 
@@ -448,7 +448,7 @@ def delete_group(board_id, group_id):
         if collab == None:
             message = "User must be the board creator or a collaborator to delete groups."
 
-            return render_template('error.html', message=message)  
+            return render_template('error.html', message=message, name=current_user.username)  
 
     group = Group.query.filter_by(public_id=group_id).first()
     tickets = Ticket.query.filter_by(group_id=group_id).all()
@@ -493,7 +493,7 @@ def create_ticket(board_id, group_id):
         if collab == None:
             message = "User must be the board creator or a collaborator to create tickets."
 
-            return render_template('error.html', message=message)  
+            return render_template('error.html', message=message, name=current_user.username)  
 
     group = Group.query.filter_by(public_id=group_id).first()
 
@@ -522,7 +522,7 @@ def update_ticket(board_id, group_id, ticket_id):
         if collab == None:
             message = "User must be the board creator or a collaborator to update tickets."
 
-            return render_template('error.html', message=message)
+            return render_template('error.html', message=message, name=current_user.username)
 
     ticket = Ticket.query.filter_by(public_id=ticket_id).first()
     group = Group.query.filter_by(public_id=group_id).first()
@@ -552,11 +552,11 @@ def update_ticket(board_id, group_id, ticket_id):
 
             if assignee != None:
                 message = "User is already assigned to this ticket."
-                return render_template('error.html', message=message)
+                return render_template('error.html', message=message, name=current_user.username)
 
             if check == False:
                 message = "User must be the board creator or a collaborator be be assigned to ticket."
-                return render_template('error.html', message=message)
+                return render_template('error.html', message=message, name=current_user.username)
 
             new_assignee = Assignee(user_id=form.assign.data, 
                     ticket_id=ticket_id, board_id=board_id)
@@ -581,7 +581,7 @@ def delete_ticket(board_id, group_id, ticket_id):
         if collab == None:
             message = "User must be the board creator or a collaborator to delete tickets."
 
-            return render_template('error.html', message=message)
+            return render_template('error.html', message=message, name=current_user.username)
 
     ticket = Ticket.query.filter_by(public_id=ticket_id).first()
     assignees = Assignee.query.filter_by(ticket_id=ticket_id).all()
@@ -625,7 +625,7 @@ def remove_assignee(board_id, ticket_id, user_id):
         if collab == None:
             message = "User must be the board creator or a collaborator to remove assignees."
 
-            return render_template('error.html', message=message)
+            return render_template('error.html', message=message, name=current_user.username)
 
     ticket = Ticket.query.filter_by(public_id=ticket_id).first()
 
@@ -656,7 +656,7 @@ def create_comment(board_id, ticket_id):
         if collab == None:
             message = "User must be the board creator or a collaborator to create comments."
 
-            return render_template('error.html', message=message)
+            return render_template('error.html', message=message, name=current_user.username)
 
     ticket = Ticket.query.filter_by(public_id=ticket_id).first()
 
@@ -667,7 +667,7 @@ def create_comment(board_id, ticket_id):
         if form.text.data == '':
             message = "Cannot post empty comment."
             
-            return render_template('error.html', message=message)
+            return render_template('error.html', message=message, name=current_user.username)
 
         now = datetime.now()
         timestamp = now.strftime("%d/%m/%Y %H:%M:%S")
@@ -696,7 +696,7 @@ def view_comments(board_id, ticket_id):
             if collab == None:
                 message = "Board is private. Must be the board creator or a collaborator to view this board."
 
-                return render_template('error.html', message=message)
+                return render_template('error.html', message=message, name=current_user.username)
 
     ticket = Ticket.query.filter_by(public_id=ticket_id).first()
     comments = Comment.query.filter_by(ticket_id=ticket_id).all()
@@ -715,7 +715,7 @@ def update_comment(board_id, ticket_id, comment_id):
         if collab == None:
             message = "User must be the board creator or a collaborator to edit comments."
 
-            return render_template('error.html', message=message)
+            return render_template('error.html', message=message, name=current_user.username)
 
     comment = Comment.query.filter_by(public_id=comment_id).first()
 
@@ -742,7 +742,7 @@ def delete_comment(board_id, ticket_id, comment_id):
         if collab == None:
             message = "User must be the board creator or a collaborator to delete comments."
             
-            return render_template('error.html', message=message)
+            return render_template('error.html', message=message, name=current_user.username)
     
     form = DeleteForm()
 
