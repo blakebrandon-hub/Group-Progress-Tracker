@@ -1,8 +1,6 @@
-# Progress Tracker 
+# Team Tracker 
 
-**<u>What is Progress Tracker?</u>**
-
-Progress Tracker is a tool for tracking the progress of group projects. 
+Team Tracker is a tool for tracking the progress of group projects. 
 
 **<u>How I do I start using this application?</u>**
 
