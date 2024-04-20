@@ -6,7 +6,7 @@ Team Tracker is a tool for tracking the progress of group projects.
 
 * Go to the signup page and create an account
 
-   [Progress Tracker (group-task.herokuapp.com)](http://group-task.herokuapp.com/signup)
+   ~~[Team Tracker (group-task.herokuapp.com)](http://group-task.herokuapp.com/signup)~~
 
 * You will be redirected to the login page and can then sign in with those credentials.
 
