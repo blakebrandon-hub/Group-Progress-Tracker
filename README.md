@@ -1,6 +1,6 @@
 # Team Tracker 
 
-Team Tracker is for tracking the progress of group projects. Similar to monday.com but FREE!
+Team Tracker is for tracking the progress of group projects. It's a free alternative to websites like monday.com
 
 **<u>How I do I start using this application?</u>**
 
