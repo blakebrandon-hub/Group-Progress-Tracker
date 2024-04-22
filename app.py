@@ -11,7 +11,7 @@ from os import environ
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "a7988b7a995eeb55235670da4f88b2fd"
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DATABASE_URL').replace("://", "ql://", 1)
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://ufeknkqn8ql42r:p7952f135ac587414e44928c7672a74b0240296444d6b54398624e5c11839bb38@c9pbiquf6p6pfn.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d8185oovd0rgkk"
 Bootstrap(app)
 db = SQLAlchemy(app)
 login_manager = LoginManager()
