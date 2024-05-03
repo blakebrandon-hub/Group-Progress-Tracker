@@ -12,7 +12,7 @@ Team Tracker is used to track the progress of group projects. It's a free altern
 
 * You will be redirected to the login page and can sign in with those credentials.
 
-* Once logged in, click "Create Board" on the navbar. You will be prompted to enter a board title, description and choose the privacy of the board.
+* Once logged in, click "Create Board" on the navbar. You will be prompted to enter a board title, description and to choose if the board is private.
 
 * You will be redirected to your first board. From here you can edit board details, delete the board, add collaborators, create groups, create tickets and comment on those tickets.
 
