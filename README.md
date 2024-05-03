@@ -10,7 +10,7 @@ Team Tracker is used to track the progress of group projects. It's a free altern
 
    ~~[Team Tracker (group-task.herokuapp.com)](http://group-task.herokuapp.com/signup)~~
 
-* You will be redirected to the login page and can then sign in with those credentials.
+* You will be redirected to the login page and can sign in with those credentials.
 
 * Once logged in, click "Create Board" on the navbar. You will be prompted to enter a board title, description and choose the privacy of the board.
 
