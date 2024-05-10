@@ -1,6 +1,6 @@
 # Team Tracker
 
-Team Tracker is used to track the progress of group projects. It's a free alternative to websites like monday.com.
+Team Tracker tracks the progress of group projects. It's a free alternative to websites like monday.com.
 
 ![good.png](https://github.com/blakebrandon-hub/Team-Tracker-for-Project-Management/assets/50201165/b54c83a2-66cb-4d47-b222-2b985c4d4728)
 
