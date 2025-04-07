@@ -68,13 +68,15 @@
 
    Navigate to http://127.0.0.1:5000/ in your browser.
 
-⚠️ Important Notes
-Security: Ensure that the SECRET_KEY is kept confidential and not exposed in public repositories.
+## ⚠️ Important Notes
 
-Deployment: For production, consider using a more robust database system and configure the application accordingly.
+- **Security:** Ensure that the `SECRET_KEY` is kept confidential and not exposed in public repositories.
+- **Deployment:** For production, consider using a more robust database system and configure the application accordingly.
 
-📜 License
-This project is licensed under the MIT License.
+## 📜 License
+
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+
 
 
    
