@@ -2,10 +2,8 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %}
-Progress Tracker
+Team Board
 {% endblock %}
-
-
 
 {% block styles %}
 {{super()}}
@@ -28,9 +26,7 @@ Progress Tracker
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-
             <li><a href="{{ url_for('create_board') }}">Create Board</a></li>
-
             <li><a href="{{ url_for('view_profile', username=name) }}">{{ name }}'s Profile</a></li>
             <li><a href="{{ url_for('logout') }}">Log Out</a></li>
           </ul>
@@ -42,7 +38,6 @@ Progress Tracker
       <div class="row">
 
         <br>
-
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-1 main">
           
@@ -72,12 +67,6 @@ Progress Tracker
        </ul>
 
 </div>
-
-
-
-
-
-          
         </div>
       </div>
     </div>
